@@ -10,7 +10,7 @@ Workflow pipeline:
 - User needs Docker permissions
 
 #Go into cloned repo directory after the clone command
-cd test
+$cd test
 
 #Build image with the name myapp
 docker build -t myapp ./
