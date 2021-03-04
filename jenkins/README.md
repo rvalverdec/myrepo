@@ -10,16 +10,26 @@ Workflow pipeline:
 - User needs Docker permissions
 
 #Go into cloned repo directory after the clone command
-$cd test
+```
+cd branch_test
+```
 
 #Build image with the name myapp
+```
 docker build -t myapp ./
+```
 
 #Deploy and expose the services "prod, dev or qa"
+```
 kubectl apply -f yamls/<env>.yaml
+```
 
 #Example
+```
 kubectl apply -f yamls/dev.yaml
+```
 
 #Check what is runnig in Kubernetes, command for Linux, output will show you all the services/pods running
+```
 kubectl get all
+```
