@@ -1,0 +1,53 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: qa-pypi
+spec:
+  type: LoadBalancer
+  selector:
+    app: pypi-qa
+  ports:
+  - protocol: TCP
+    port: 8200
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qa-pypi
+  labels:
+    app: pypi-qa
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pypi-qa
+  template:
+    metadata:
+      labels:
+        app: pypi-qa
+    spec:
+      containers:
+      - name: pypi-qa
+        imagePullPolicy: IfNotPresent
+        image: myimgqa
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+            - name: storageqa
+              mountPath: /app/local
+      volumes:
+        - name: storageqa
+          persistentVolumeClaim:
+            claimName: persistvolumeqa
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: persistvolumeqa
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

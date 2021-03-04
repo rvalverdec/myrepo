@@ -1,0 +1,53 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: prod-pypi
+spec:
+  type: LoadBalancer
+  selector:
+    app: pypi-prod
+  ports:
+  - protocol: TCP
+    port: 8300
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prod-pypi
+  labels:
+    app: pypi-prod
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pypi-prod
+  template:
+    metadata:
+      labels:
+        app: pypi-prod
+    spec:
+      containers:
+      - name: pypi-prod
+        imagePullPolicy: IfNotPresent
+        image: myapp
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+            - name: storageprod
+              mountPath: /app/local
+      volumes:
+        - name: storageprod
+          persistentVolumeClaim:
+            claimName: persistvolumeprod
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: persistvolumeprod
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
