@@ -9,7 +9,7 @@ Workflow pipeline:
 - Kubernetes and Docker installed
 - User needs Docker permissions
 
-#Go into cloned repo directory after the clone command
+#Go into cloned repo directory
 ```
 cd myrepo
 ```
