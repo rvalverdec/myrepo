@@ -11,7 +11,7 @@ Workflow pipeline:
 
 #Go into cloned repo directory after the clone command
 ```
-cd branch_test
+cd test
 ```
 
 #Build image with the name myapp
