@@ -29,7 +29,7 @@ kubectl apply -f yamls/<env>.yaml
 kubectl apply -f yamls/dev.yaml
 ```
 
-#Check what is runnig in Kubernetes, command for Linux, output will show you all the services/pods running
+#Check what is runnig in Kubernetes, output will show you all the services/pods running
 ```
 kubectl get all
 ```
