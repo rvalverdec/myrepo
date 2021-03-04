@@ -5,7 +5,7 @@ pipeline {
         stage('Stage 1: Clone') {
             steps {
                 echo 'Stage 1: Clone'
-                git branch: 'test', url: 'https://github.com/rvalverdec/test.git'
+                git branch: 'branch_test', url: 'https://github.com/rvalverdec/test.git'
             }
         }
         stage('Stage 2: Building Image') {
