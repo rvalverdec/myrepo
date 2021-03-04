@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Stage 1: Clone') {
+            steps {
+                echo 'Stage 1: Clone'
+                git branch: 'test', url: 'https://github.com/rvalverdec/test.git'
+            }
+        }
+        stage('Stage 2: Building Image') {
+            steps {
+                echo 'Stage 2: Building Image'
+                sh 'id'
+                sh 'docker build -t myapp ./'
+                
+            }
+        }
+        stage('Stage 3: Deployment Dev') {
+            steps {
+                echo 'Stage 3: Deployment Dev'
+                sh 'kubectl apply -f yamls/dev.yaml'
+            }
+        }
+        stage('Stage 4: Deployment QA') {
+            steps {
+                echo 'Stage 4: Deployment QA'
+                sh 'kubectl apply -f yamls/QA.yaml'
+            }
+        }
+        stage('Stage 5: Deployment Prod') {
+            steps {
+                echo 'Stage 5: Deployment Prod'
+                sh 'kubectl apply -f yamls/Prod.yaml'
+            }
+        }
+        stage('Stage 6: Showing service details') {
+            steps {
+                echo 'Stage 6: Showing service details'
+                sh 'kubectl get all'
+            
+            }
+        }
+    }
+}
